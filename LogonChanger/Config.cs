@@ -11,16 +11,24 @@ namespace LogonChanger
     {
         // Settings Keys
         public static readonly string Interval = "PingInterval";
-        public static readonly string BingXmlkey = "XmlKey";
-        public static readonly string Resolution = "Resolution";
         public static readonly string WallpaperDir = "WallpaperDir";
-        public static readonly string Url = "Url";
+        public static readonly string Url = "url";
         public static readonly string Verbose = "Verbose";
         public static readonly string BingHash = "BingHash";
+        public static readonly string Mode = "Mode";
+        public static readonly string RemoteConfig = "RemoteConfig";
 
+        // Xml keys
+        public static readonly string BingXmlkey = "xmlKey";
+        public static readonly string Resolution = "resolution";
+
+        // File names
         public static readonly string PriFileName = "Windows.UI.Logon.pri";
         public static readonly string BakPriFileName = $"{PriFileName}.bak";
         public static readonly string CurrentImage = "current.img";
+
+        // Paths
+        public static readonly string RemoteConfigPath = Path.Combine(Environment.CurrentDirectory, "remoteConfig.xml");
 
         public static readonly string TempPriPath = Path.Combine(Path.GetTempPath(), "temp_pri.pri");
         public static readonly string NewPriPath = Path.Combine(Path.GetTempPath(), "new_pri.pri");

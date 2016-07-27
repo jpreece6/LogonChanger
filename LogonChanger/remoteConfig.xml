@@ -1,0 +1,5 @@
+<config>
+	<url><![CDATA[http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-GB"]]></url>
+	<resolution>1920x1200</resolution>
+	<xmlKey>urlBase</xmlKey>
+</config>

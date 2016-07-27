@@ -9,7 +9,7 @@ using SettingsVault;
 
 namespace LogonChanger
 {
-    class WebResource
+    class WebResource : IResource
     {
         protected virtual string Connect(Uri remoteUri, string requestMethod = "GET")
         {
@@ -17,6 +17,7 @@ namespace LogonChanger
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(remoteUri.OriginalString);
             request.KeepAlive = false;
             //request.Method = "GET";
+            request.Method = requestMethod;
             using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
             {
                 using (StreamReader sr = new StreamReader(response.GetResponseStream()))
@@ -30,13 +31,33 @@ namespace LogonChanger
         {
             using (var client = new WebClient())
             {
-                client.DownloadFile(remoteUri.OriginalString, fileName);
+                try
+                {
+                    client.DownloadFile(remoteUri.OriginalString, fileName);
+                }
+                catch (Exception ex)
+                {
+                    if (ex is ArgumentException || ex is WebException || ex is NotSupportedException)
+                    {
+                        Logger.WriteError("Failed to download resource", ex);
+                        return;
+                    }
+                }
             }
+
+            Logger.WriteInformation("Wallpaper downloaded successfully and saved to: " + fileName);
         }
 
-        public virtual void GetResource(Uri remoteUri, string fileName)
+        public virtual bool GetResource(Uri remoteUri, string fileName)
         {
             DownloadResource(remoteUri, fileName);
+
+            return File.Exists(fileName);
+        }
+
+        public bool GetResource(string folderPath)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,15 +12,25 @@ namespace LogonChanger
     {
         public static bool Verbose { get; set; }
 
-        public static void WriteInformation(string message)
+        private static string _source = "LogonChanger";
+
+        public static void WriteInformation(string message, bool overrideVerbose = false)
         {
-            if (Verbose)
-                EventLog.WriteEntry("LogonChanger", message, EventLogEntryType.Information);
+            if (!overrideVerbose)
+                if (!Verbose)
+                    return;
+            
+            EventLog.WriteEntry(_source, message, EventLogEntryType.Information);
         }
 
         public static void WriteError(string message, Exception e)
         {
-            EventLog.WriteEntry("LogonChanger", message + "\n\n" + e.Message);
+            EventLog.WriteEntry(_source, message + "\n\n" + e.Message);
+        }
+
+        public static void WriteWarning(string message)
+        {
+            EventLog.WriteEntry(_source, message, EventLogEntryType.Warning);
         }
     }
 }

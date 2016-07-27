@@ -12,20 +12,9 @@ namespace TestHarness
     {
         static void Main(string[] args)
         {
-            var changer = new Changer();
+            Changer.InitialiseSettings(args);
 
-            Settings.Init(Config.SettingsFilePath);
-
-            Settings.Default.Set(Config.Interval, 3600000); // 1 hour
-            Settings.Default.Set(Config.BingXmlkey, "urlBase");
-            Settings.Default.Set(Config.Resolution, "1920x1200");
-            Settings.Default.Set(Config.WallpaperDir, @"C:\LogonWallpapers\");
-            Settings.Default.Set(Config.Url, @"http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-GB");
-            Settings.Default.Set(Config.Verbose, false);
-
-            Settings.Default.Save();
-
-            changer.Update();
+            Changer.Update();
         }
     }
 }

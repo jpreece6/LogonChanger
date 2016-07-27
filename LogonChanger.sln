@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogonChanger", "LogonChange
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogonEditor", "LogonEditor\LogonEditor.csproj", "{E10BB8FF-444A-4721-88B7-F5A281BB76EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{FA4EFAA2-39F3-4D50-901A-CABBF7695623}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E10BB8FF-444A-4721-88B7-F5A281BB76EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E10BB8FF-444A-4721-88B7-F5A281BB76EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E10BB8FF-444A-4721-88B7-F5A281BB76EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4EFAA2-39F3-4D50-901A-CABBF7695623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4EFAA2-39F3-4D50-901A-CABBF7695623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4EFAA2-39F3-4D50-901A-CABBF7695623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4EFAA2-39F3-4D50-901A-CABBF7695623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
