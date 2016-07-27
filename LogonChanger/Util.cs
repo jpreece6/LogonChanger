@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,7 +34,7 @@ namespace LogonChanger
 
         public static string GenerateFileTimeStamp()
         {
-            return "";
+            return DateTime.Now.ToString("yyyyMMdd-HHmm");
         }
     }
 }
