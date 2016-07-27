@@ -16,7 +16,6 @@ namespace LogonChanger
         public static readonly string Verbose = "Verbose";
         public static readonly string BingHash = "BingHash";
         public static readonly string Mode = "Mode";
-        public static readonly string RemoteConfig = "RemoteConfig";
 
         // Xml keys
         public static readonly string BingXmlkey = "xmlKey";
