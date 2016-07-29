@@ -54,7 +54,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogonChanger\ChangerCore.csproj">
+    <ProjectReference Include="..\ChangerCore\ChangerCore.csproj">
       <Project>{fcf1f33f-e14f-432e-8702-b6a187abac13}</Project>
       <Name>ChangerCore</Name>
     </ProjectReference>
