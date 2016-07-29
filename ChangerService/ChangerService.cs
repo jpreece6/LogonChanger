@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 using System.Timers;
-using LogonChanger;
+using ChangerCore;
 using SettingsVault;
 
 namespace ChangerService

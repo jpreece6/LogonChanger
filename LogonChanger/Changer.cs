@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using LogonEditor;
 using NDesk.Options;
 using SettingsVault;
 using HelperLib = HelperLibrary.HelperLib;
 
-namespace LogonChanger
+namespace ChangerCore
 {
     public static class Changer
     {
@@ -83,6 +76,7 @@ namespace LogonChanger
                     {"m|mode:", (int v) => Settings.Default.Set(Config.Mode, (Mode)v)},
                     {"c|config:", v => Settings.Default.Set(Config.ConfigPath,v) },
                     {"v", v => Settings.Default.Set(Config.Verbose, (v != null))},
+                    {"h|help", v => DisplayHelp() }
                 };
 
                 try
@@ -98,6 +92,11 @@ namespace LogonChanger
 
             Logger.Verbose = Settings.Default.Get<bool>(Config.Verbose,false);
             Settings.Default.Save();
+        }
+
+        private static void DisplayHelp()
+        {
+            Logger.WriteInformation("Useage ", true);
         }
 
         private static void UpdatePri(string resourceFileName)
