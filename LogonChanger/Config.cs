@@ -16,6 +16,8 @@ namespace LogonChanger
         public static readonly string Verbose = "Verbose";
         public static readonly string BingHash = "BingHash";
         public static readonly string Mode = "Mode";
+        public static readonly string ConfigPath = "ConfigPath";
+        public static readonly string EnumeratedFiles = "EnumeratedFiles";
 
         // Xml keys
         public static readonly string BingXmlkey = "xmlKey";
@@ -27,7 +29,7 @@ namespace LogonChanger
         public static readonly string CurrentImage = "current.img";
 
         // Paths
-        public static readonly string RemoteConfigPath = Path.Combine(Environment.CurrentDirectory, "remoteConfig.xml");
+        public static readonly string RemoteConfigPath = Path.Combine(@"C:\", "LoginChangerService", "remoteConfig.xml");
 
         public static readonly string TempPriPath = Path.Combine(Path.GetTempPath(), "temp_pri.pri");
         public static readonly string NewPriPath = Path.Combine(Path.GetTempPath(), "new_pri.pri");

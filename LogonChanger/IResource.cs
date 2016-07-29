@@ -8,7 +8,9 @@ namespace LogonChanger
 {
     interface IResource
     {
-        bool GetResource(Uri remoteUri, string fileName);
-        bool GetResource(string folderPath);
+        string GetResource(Uri remoteUri);
+        string GetResource(string folderPath);
+
+        string GetResourceFromConfig(string configPath);
     }
 }

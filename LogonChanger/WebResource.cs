@@ -48,14 +48,21 @@ namespace LogonChanger
             Logger.WriteInformation("Wallpaper downloaded successfully and saved to: " + fileName);
         }
 
-        public virtual bool GetResource(Uri remoteUri, string fileName)
+        public virtual string GetResource(Uri remoteUri)
         {
+            var fileName = Settings.Default.Get<string>(Config.WallpaperDir) + Util.GenerateFileTimeStamp() + ".jpg";
+
             DownloadResource(remoteUri, fileName);
 
-            return File.Exists(fileName);
+            return fileName;
         }
 
-        public bool GetResource(string folderPath)
+        public virtual string GetResource(string folderPath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual string GetResourceFromConfig(string configPath)
         {
             throw new NotImplementedException();
         }

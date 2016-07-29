@@ -16,16 +16,17 @@ namespace LogonChanger
         private string _xmlKey;
         private string _url;
 
-        public override bool GetResource(Uri remoteUri, string fileName)
+        public override string GetResourceFromConfig(string configPath)
         {
             GetConfigSettings();
 
+            var fileName = Settings.Default.Get<string>(Config.WallpaperDir) + Util.GenerateFileTimeStamp() + ".jpg";
             var response = Connect(new Uri(_url));
 
             var bingHash = Util.GetMd5Hash(response);
             var localHash = Settings.Default.Get<string>(Config.BingHash, "");
 
-            if (localHash.Equals(bingHash)) return false;
+            if (localHash.Equals(bingHash)) return "";
 
             Settings.Default.Set(Config.BingHash, bingHash);
             Settings.Default.Save();
@@ -33,7 +34,7 @@ namespace LogonChanger
             ProcessResponseXml(ref response);
             DownloadResource(new Uri("http://www.bing.com" + response + "_" + _resolution + ".jpg"), fileName);
 
-            return File.Exists(fileName);
+            return fileName;
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -27,28 +28,27 @@ namespace LogonChanger
         {
             ConfigureWallpaperDir();
 
-            var fileName = Settings.Default.Get<string>(Config.WallpaperDir) + Util.GenerateFileTimeStamp() + ".jpg";
-            var result = false;
+            var fileName = "";
 
             switch (Settings.Default.Get<Mode>(Config.Mode, Mode.Bing))
             {
                 case Mode.Bing:
                     var bingResource = new BingWebResource();
-                    result = bingResource.GetResource(null, fileName);
+                    fileName = bingResource.GetResourceFromConfig(Settings.Default.Get<string>(Config.ConfigPath));
                     break;
                 case Mode.Remote:
                     var remoteResource = new WebResource();
-                    result = remoteResource.GetResource(new Uri(Settings.Default.Get<string>(Config.Url)), fileName);
+                    fileName = remoteResource.GetResource(new Uri(Settings.Default.Get<string>(Config.Url)));
                     break;
                 case Mode.Local:
                     var localResource = new LocalResource();
-                    result = localResource.GetResource("");
+                    fileName = localResource.GetResource(Settings.Default.Get<string>(Config.WallpaperDir));
                     break;
             }
             
 
             // If we failed to download the image just return
-            if (!result)
+            if (string.IsNullOrEmpty(fileName))
                 return;
             
             TakeOwnershipPri();
@@ -67,6 +67,7 @@ namespace LogonChanger
                 Settings.Default.Set(Config.WallpaperDir, @"C:\LogonWallpapers\");
                 Settings.Default.Set(Config.Verbose, false);
                 Settings.Default.Set(Config.Mode, Mode.Bing);
+                Settings.Default.Set(Config.ConfigPath, Config.RemoteConfigPath);
 
                 Settings.Default.Save();
             }
@@ -79,6 +80,8 @@ namespace LogonChanger
                     {"i|interval:", (int v) => Settings.Default.Set(Config.Interval, v)},
                     {"d|dir:", v => Settings.Default.Set(Config.WallpaperDir, v)},
                     {"u|url:", v => Settings.Default.Set(Config.Url, v)},
+                    {"m|mode:", (int v) => Settings.Default.Set(Config.Mode, (Mode)v)},
+                    {"c|config:", v => Settings.Default.Set(Config.ConfigPath,v) },
                     {"v", v => Settings.Default.Set(Config.Verbose, (v != null))},
                 };
 
