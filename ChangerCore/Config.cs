@@ -13,7 +13,8 @@ namespace ChangerCore
         public static readonly string BingHash = "BingHash";
         public static readonly string Mode = "Mode";
         public static readonly string ConfigPath = "ConfigPath";
-        public static readonly string EnumeratedFiles = "EnumeratedFiles";
+        public static readonly string Shuffle = "Shuffle";
+        public static readonly string FileIndex = "FileIndex";
 
         // Xml keys
         public static readonly string BingXmlkey = "xmlKey";
