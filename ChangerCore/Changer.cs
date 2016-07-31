@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.IO;
 using LogonEditor;
 using NDesk.Options;
@@ -17,22 +18,29 @@ namespace ChangerCore
             Bing
         }
 
+        /// <summary>
+        /// Updates the logon screen with a new image from a specified resource
+        /// </summary>
         public static void Update()
         {
             ConfigureWallpaperDir();
 
             var fileName = "";
 
+            // Determine the mode to process
             switch (Settings.Default.Get<Mode>(Config.Mode, Mode.Bing))
             {
+                // Get logon image from Bing
                 case Mode.Bing:
                     var bingResource = new BingWebResource();
                     fileName = bingResource.GetResourceFromConfig(Settings.Default.Get<string>(Config.ConfigPath));
                     break;
+                // Get logon image from a custom url
                 case Mode.Remote:
                     var remoteResource = new WebResource();
                     fileName = remoteResource.GetResource(new Uri(Settings.Default.Get<string>(Config.Url)));
                     break;
+                // Get logon image from local directory
                 case Mode.Local:
                     var localResource = new LocalResource();
                     fileName = localResource.GetResource(Settings.Default.Get<string>(Config.WallpaperDir));
@@ -44,11 +52,15 @@ namespace ChangerCore
             if (string.IsNullOrEmpty(fileName))
                 return;
             
-            TakeOwnershipPri();
             UpdatePri(fileName);
 
         }
 
+        /// <summary>
+        /// Initalises the application settings. From default selected options and from arguments
+        /// passed to it from a source application
+        /// </summary>
+        /// <param name="args">arguments initalise settings from</param>
         public static void InitialiseSettings(string[] args = null)
         {
             Settings.Init(Config.SettingsFilePath);
@@ -61,6 +73,8 @@ namespace ChangerCore
                 Settings.Default.Set(Config.Verbose, false);
                 Settings.Default.Set(Config.Mode, Mode.Bing);
                 Settings.Default.Set(Config.ConfigPath, Config.RemoteConfigPath);
+                Settings.Default.Set(Config.Shuffle, false);
+                Settings.Default.Set(Config.FileIndex, 0);
 
                 Settings.Default.Save();
             }
@@ -75,6 +89,8 @@ namespace ChangerCore
                     {"u|url:", v => Settings.Default.Set(Config.Url, v)},
                     {"m|mode:", (int v) => Settings.Default.Set(Config.Mode, (Mode)v)},
                     {"c|config:", v => Settings.Default.Set(Config.ConfigPath,v) },
+                    {"s|shuffle:", (bool v) => Settings.Default.Set(Config.Shuffle, v)},
+                    {"si|startIndex:", (int v) => Settings.Default.Set(Config.FileIndex, v)},
                     {"v", v => Settings.Default.Set(Config.Verbose, (v != null))},
                     {"h|help", v => DisplayHelp() }
                 };
@@ -94,13 +110,22 @@ namespace ChangerCore
             Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Displays the help message when requested via cmd args
+        /// </summary>
         private static void DisplayHelp()
         {
             Logger.WriteInformation("Useage ", true);
         }
 
+        /// <summary>
+        /// Updates the system PRI file with the new image
+        /// </summary>
+        /// <param name="resourceFileName">Path to new image</param>
         private static void UpdatePri(string resourceFileName)
         {
+            TakeOwnershipPri();
+
             if (File.Exists(Config.NewPriPath))
                 File.Delete(Config.NewPriPath);
 
@@ -110,12 +135,18 @@ namespace ChangerCore
             Logger.WriteInformation("Wallpaper Set!", true);
         }
 
+        /// <summary>
+        /// Creates a new wallpaper directory. Used to store images from Bing or custom urls
+        /// </summary>
         private static void ConfigureWallpaperDir()
         {
             if (!Directory.Exists(Settings.Default.Get<string>(Config.WallpaperDir)))
                 Directory.CreateDirectory(Settings.Default.Get<string>(Config.WallpaperDir));
         }
 
+        /// <summary>
+        /// Aquires ownership of the system PRI file so we can update the file
+        /// </summary>
         private static void TakeOwnershipPri()
         {
             HelperLib.TakeOwnership(Config.LogonFolder);
