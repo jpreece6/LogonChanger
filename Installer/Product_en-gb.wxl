@@ -18,6 +18,11 @@
   <String Id="FeatureMainProgramDescription">The main version including all dependencies.</String>
   <String Id="FeatureMainProgramTitle">Main program</String>
 
+  <String Id="ConsoleProgramTitle">Logon Changer console app</String>
+  <String Id="ConsoleProgramDescription">Logon changer as a console application to be called via commandline instead of service</String>
+
   <String Id="ServiceDisplayName">LogonChanger</String>
   <String Id="ServiceDescription">Updates the Windows 10 logon screen with a bing or slideshow wallpaper.</String>
+  
+  
 </WixLocalization>

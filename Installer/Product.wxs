@@ -55,6 +55,10 @@
             <Component Id="comp_NDesk.Options.dll" Guid="B4664DD5-183F-4154-BE9A-BEE2CF6EA731">
               <File Source="../ChangerCore/bin/Release/NDesk.Options.dll" KeyPath="yes" Id="ndesk.options.dll"/>
             </Component>
+
+            <Component Id="comp_LogonChanger.exe" Guid="C1BC379F-48F5-4994-97CE-8CA9C0206F3B">
+              <File Source="../LogonChanger/bin/Release/LogonChanger.exe" KeyPath="yes" Id="logonChanger.dll"/>
+            </Component>
         </Directory>
       </Directory>
     </Directory>
@@ -70,6 +74,10 @@
             <ComponentRef Id="comp_remoteConfig.xml"/>
             <ComponentRef Id="comp_SettingsVault.dll"/>
             <ComponentRef Id="comp_NDesk.Options.dll"/>
+        </Feature>
+
+        <Feature Id="ConsoleProgram" Title="!(loc.ConsoleProgramTitle)" Description="!(loc.ConsoleProgramDescription" Level="1">
+            <ComponentRef Id="comp_LogonChanger.exe"/>
         </Feature>
     </Feature>
   
