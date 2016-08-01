@@ -1,6 +1,7 @@
 ﻿using System.ServiceProcess;
 using System.Timers;
 using ChangerCore;
+using ChangerCore.Exceptions;
 using SettingsVault;
 
 namespace ChangerService
@@ -28,7 +29,15 @@ namespace ChangerService
 
         private void ServiceTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Changer.Update();
+            try
+            {
+                Changer.Update();
+            }
+            catch (UnsupportedOSException uoe)
+            {
+                Logger.WriteError("Stopping service!", uoe);
+                Stop();
+            }
         }
 
         protected override void OnStop()

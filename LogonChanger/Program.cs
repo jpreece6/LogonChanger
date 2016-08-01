@@ -1,4 +1,6 @@
-﻿using ChangerCore;
+﻿using System;
+using ChangerCore;
+using ChangerCore.Exceptions;
 
 namespace LogonChanger
 {
@@ -8,7 +10,15 @@ namespace LogonChanger
         {
             Changer.InitialiseSettings(args);
 
-            Changer.Update();
+            try
+            {
+                Changer.Update();
+            }
+            catch (UnsupportedOSException uoe)
+            {
+                Console.WriteLine("Error: Could not start program.\n\n" + uoe.Message);
+                Console.ReadKey();
+            }
         }
     }
 }
