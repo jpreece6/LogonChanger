@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Dynamic;
 using System.IO;
+using ChangerCore.Exceptions;
 using LogonEditor;
 using NDesk.Options;
 using SettingsVault;
@@ -23,6 +25,12 @@ namespace ChangerCore
         /// </summary>
         public static void Update()
         {
+            // Ensure we're running WIN 10 or above
+            if (!Util.IsWindows10())
+            {
+                throw new UnsupportedOSException("Non supported OS detected aborting...");
+            }
+
             ConfigureWallpaperDir();
 
             var fileName = "";
