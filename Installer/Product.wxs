@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="!(loc.ApplicationName)" Language="1033" Version="1.0.0.0" Manufacturer="!(loc.ManufacturerName)" UpgradeCode="25a10190-9cbf-4c9e-8621-f77670132a88">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="!(loc.NewerInstalled)" />
+    
+    <Condition Message="You need to be an administrator to install this product.">
+      Privileged
+    </Condition>
+
+    <!-- Define Directory Structure -->
+
+    <Media Id="1" EmbedCab="yes" Cabinet='logonChanger.cab' />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+
+          <Directory Id="INSTALLDIR" Name="!(loc.ApplicationName)">
+
+            <!-- Install dir as compoent so we can empty it on uninstall -->
+            <Component Id="comp_INSTALLDIR" Guid="C68482DA-E80C-41A8-AAD6-5749562DEA1D">
+              <CreateFolder/>
+              <RemoveFile Id="RemoveFilesFromAppDirectory" Name="*.*" On="uninstall"/>
+            </Component>
+
+            <!-- Main program -->
+            <Component Id="comp_ChangerService.exe" Guid="*">
+              <File Source="../ChangerService/bin/Release/ChangerService.exe" KeyPath="yes" Id="changerSerice.exe"/>
+              <ServiceInstall Id="ServiceInstaller" Account="LocalSystem" Description="!(loc.ServiceDescription)" DisplayName="!(loc.ServiceDisplayName)" ErrorControl="normal"
+                                         LoadOrderGroup="NetworkProvider" Name="LogonChanger" Start="auto" Type="ownProcess" Vital="no" />
+              <ServiceControl Id="ServiceControl" Name="LogonChanger" Start="install" Stop="both" Remove="uninstall" />
+            </Component>
+
+            <Component Id="comp_ChangerCore.dll" Guid="290A40E0-6E80-44B0-9608-E58557CC4A68">
+              <File Source="../ChangerCore/bin/Release/ChangerCore.dll" KeyPath="yes" Id="changerCore.dll"/>
+            </Component>
+
+            <Component Id="comp_HelperLibrary.dll" Guid="13D2E179-F9B6-4467-94B7-E26FA132DC43">
+              <File Source="../HelperLibrary/bin/Release/HelperLibrary.dll" KeyPath="yes" Id="helperLibrary.dll"/>
+            </Component>
+
+            <Component Id="comp_LogonEditor.dll" Guid="73ECA5F9-426F-4A54-B6B8-1C9FEEF85E24">
+              <File Source="../LogonEditor/bin/Release/LogonEditor.dll" KeyPath="yes" Id="logonEditor.dll"/>
+            </Component>
+
+            <Component Id="comp_remoteConfig.xml" Guid="0C0D09A0-AAF7-452D-B47C-BF219ED639EA">
+              <File Source="../ChangerCore/bin/Release/remoteConfig.xml" KeyPath="yes" Id="remoteConfig.xml"/>
+            </Component>
+
+            <Component Id="comp_SettingsVault.dll" Guid="17AD9816-B783-434A-A4A2-75825901ABF2">
+              <File Source="../ChangerCore/bin/Release/SettingsVault.dll" KeyPath="yes" Id="settingsVault.dll"/>
+            </Component>
+
+            <Component Id="comp_NDesk.Options.dll" Guid="B4664DD5-183F-4154-BE9A-BEE2CF6EA731">
+              <File Source="../ChangerCore/bin/Release/NDesk.Options.dll" KeyPath="yes" Id="ndesk.options.dll"/>
+            </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+  
+    <Feature Id="Complete" Title="!(loc.ApplicationName)" Description="!(loc.FeatureCompleteDescription)" Display="expand" ConfigurableDirectory="INSTALLDIR" Level="1">
+      <!-- A feature block for the main (GUI) program and all its dependencies -->
+         <Feature Id="MainProgram" Title="!(loc.FeatureMainProgramTitle)" Description="!(loc.FeatureMainProgramDescription)" Level="1">
+            <ComponentRef Id="comp_INSTALLDIR"/>
+            <ComponentRef Id="comp_ChangerService.exe"/>
+            <ComponentRef Id="comp_ChangerCore.dll"/>
+            <ComponentRef Id="comp_HelperLibrary.dll"/>
+            <ComponentRef Id="comp_LogonEditor.dll"/>
+            <ComponentRef Id="comp_remoteConfig.xml"/>
+            <ComponentRef Id="comp_SettingsVault.dll"/>
+            <ComponentRef Id="comp_NDesk.Options.dll"/>
+        </Feature>
+    </Feature>
+  
+    <UI>
+      <!-- Define the installer UI -->
+      <UIRef Id="WixUI_GB" />
+    </UI>
+  
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <Property Id="WIXUI_SERVERS" Value="SERVERS" />
+	</Product>
+</Wix>
