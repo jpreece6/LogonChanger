@@ -60,7 +60,7 @@
     <Compile Include="WebResource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelperLib\HelperLibrary.csproj">
+    <ProjectReference Include="..\HelperLibrary\HelperLibrary.csproj">
       <Project>{1d88a1e6-840c-473a-9ddc-4806e0c57970}</Project>
       <Name>HelperLibrary</Name>
     </ProjectReference>
