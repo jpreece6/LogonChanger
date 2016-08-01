@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Win32;
 
 namespace ChangerCore
 {
     class Util
     {
+        /// <summary>
+        /// Generates a MD5 hash based on the given input
+        /// </summary>
+        /// <param name="strInput">Input to hash</param>
+        /// <returns>hash of input string</returns>
         public static string GetMd5Hash(string strInput)
         {
             var md5Hash = MD5.Create();
@@ -28,9 +35,22 @@ namespace ChangerCore
             return sBuilder.ToString();
         }
 
+        /// <summary>
+        /// Creates a timestamp
+        /// </summary>
+        /// <returns>timestamp as string</returns>
         public static string GenerateFileTimeStamp()
         {
             return DateTime.Now.ToString("yyyyMMdd-HHmm");
+        }
+
+        /// <summary>
+        /// Checks the compatibility of the current environment only runs on WIN10
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsWindows10()
+        {
+            return (Environment.OSVersion.Version.Major >= 10);
         }
     }
 }
