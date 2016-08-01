@@ -26,7 +26,7 @@ namespace ChangerCore
         public static readonly string CurrentImage = "current.img";
 
         // Paths
-        public static readonly string RemoteConfigPath = Path.Combine(@"C:\", "LoginChangerService", "remoteConfig.xml");
+        public static readonly string RemoteConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "remoteConfig.xml");
 
         public static readonly string TempPriPath = Path.Combine(Path.GetTempPath(), "temp_pri.pri");
         public static readonly string NewPriPath = Path.Combine(Path.GetTempPath(), "new_pri.pri");
@@ -38,6 +38,6 @@ namespace ChangerCore
         public static readonly string BakPriFileLocation = Path.Combine(LogonFolder, BakPriFileName);
         public static readonly string CurrentImageLocation = Path.Combine(LogonFolder, CurrentImage);
 
-        public static string SettingsFilePath = Path.Combine(@"C:\", "LoginChangerService", "settings.bin");
+        public static string SettingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.bin");
     }
 }
