@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="NDesk.Options, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NDesk.Options.0.2.1\lib\NDesk.Options.dll</HintPath>
@@ -50,6 +51,7 @@
     <Compile Include="BingWebResource.cs" />
     <Compile Include="Changer.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Exceptions\UnsupportedOSException.cs" />
     <Compile Include="IResource.cs" />
     <Compile Include="LocalResource.cs" />
     <Compile Include="Logger.cs" />
