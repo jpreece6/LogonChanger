@@ -20,7 +20,12 @@ namespace ChangerCore
 
         public static void WriteError(string message, Exception e)
         {
-            EventLog.WriteEntry(_source, message + "\n\n" + e.Message);
+            EventLog.WriteEntry(_source, message + "\n\n" + e.Message, EventLogEntryType.Error);
+        }
+
+        public static void WriteError(string message)
+        {
+            EventLog.WriteEntry(_source, message, EventLogEntryType.Error);
         }
 
         public static void WriteWarning(string message)
