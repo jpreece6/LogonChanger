@@ -6,4 +6,4 @@ install:
 
 script:
 - xbuild /p:Configuration=Debug LogonChanger.sln
-- mono ./testrunner/NUnit.ConsoleRunner.3.4.0/tools/nunit3-console.exe ./Test/bin/Release/Test.dll --where "cat != NotOnMono"
+- mono ./testrunner/NUnit.ConsoleRunner.3.4.0/tools/nunit3-console.exe ./Test/bin/Debug/Test.dll --where "cat != NotOnMono"
