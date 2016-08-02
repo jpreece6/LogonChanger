@@ -1,0 +1,4 @@
+language: csharp
+solution: LogonChanger.sln
+
+- xbuild /p:Configuration=Release LogonChanger.sln
