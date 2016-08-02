@@ -24,11 +24,19 @@ namespace ChangerCore
             if (localHash.Equals(bingHash)) return "";
 
             Settings.Default.Set(Config.BingHash, bingHash);
-            Settings.Default.Save();
+            
 
             ProcessResponseXml(ref response);
-            DownloadResource(new Uri("http://www.bing.com" + response + "_" + _resolution + ".jpg"), fileName);
+            var downloadSuccess = DownloadResource(new Uri("http://www.bing.com" + response + "_" + _resolution + ".jpg"), fileName);
 
+            if (!downloadSuccess)
+            {
+                Settings.Default.Set(Config.BingHash, "");
+                Settings.Default.Save();
+                return null;
+            }
+
+            Settings.Default.Save();
             return fileName;
         }
 

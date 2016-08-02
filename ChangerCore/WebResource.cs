@@ -23,7 +23,7 @@ namespace ChangerCore
             }
         }
 
-        protected virtual void DownloadResource(Uri remoteUri, string fileName)
+        protected virtual bool DownloadResource(Uri remoteUri, string fileName)
         {
             using (var client = new WebClient())
             {
@@ -36,12 +36,19 @@ namespace ChangerCore
                     if (ex is ArgumentException || ex is WebException || ex is NotSupportedException)
                     {
                         Logger.WriteError("Failed to download resource", ex);
-                        return;
+                        return false;
                     }
                 }
             }
 
+            if (!File.Exists(fileName))
+            {
+                Logger.WriteError("File downloaded but was not found!");
+                return false;
+            }
+
             Logger.WriteInformation("Wallpaper downloaded successfully and saved to: " + fileName);
+            return true;
         }
 
         public virtual string GetResource(Uri remoteUri)
