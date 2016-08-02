@@ -1,5 +1,9 @@
 language: csharp
 solution: LogonChanger.sln
 
+install:
+  - nuget install NUnit.Runners -Version 3.4.0 -OutputDirectory testrunner
+
 script:
-- xbuild /p:Configuration=Release LogonChanger.sln
+- xbuild /p:Configuration=Debug LogonChanger.sln
+- mono ./testrunner/NUnit.ConsoleRunner.3.4.0/tools/nunit3-console.exe ./Test/Release/Test.dll --where "cat != NotOnMono"
